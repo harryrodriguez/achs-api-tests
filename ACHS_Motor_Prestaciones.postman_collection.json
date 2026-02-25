@@ -1,0 +1,804 @@
+{
+	"info": {
+		"_postman_id": "557aa0f1-5ab7-4c6b-8018-1978efe41aef",
+		"name": "📁 Collection: ACHS - Motor Prestaciones",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10248176",
+		"_collection_link": "https://www.postman.com/crimson-crater-294619/workspace/prestaciones-econmicas-de-la-achs/collection/10248176-557aa0f1-5ab7-4c6b-8018-1978efe41aef?action=share&source=collection_link&creator=10248176"
+	},
+	"item": [
+		{
+			"name": "01_Sin_Beneficio",
+			"item": [
+				{
+					"name": "TC01_Grado_14_9",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Debe ser NINGUNO\", function () {\r",
+									"    pm.expect(json.tipoBeneficio).to.eql(\"NINGUNO\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Monto debe ser 0\", function () {\r",
+									"    pm.expect(json.monto).to.eql(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sbm\": 1000000,\r\n  \"gradoIncapacidad\": 14.9,\r\n  \"opciones\": {\r\n    \"granInvalidez\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beneficios",
+								"calcular"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "02_Indemnizacion_Global",
+			"item": [
+				{
+					"name": "TC02_Grado_15_Factor_1_5",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Tipo debe ser INDEMNIZACION_GLOBAL\", () => {\r",
+									"    pm.expect(json.tipoBeneficio).to.eql(\"INDEMNIZACION_GLOBAL\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Monto correcto con factor 1.5\", () => {\r",
+									"    pm.expect(json.monto).to.eql(1500000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Periodicidad debe ser UNICA\", () => {\r",
+									"    pm.expect(json.periodicidad).to.eql(\"UNICA\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sbm\": 1000000,\r\n  \"gradoIncapacidad\": 15.0,\r\n  \"opciones\": {\r\n    \"granInvalidez\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beneficios",
+								"calcular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC03_Grado_20_Factor_4.5",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"const esperado = 1000000 * 4.5;\r",
+									"\r",
+									"pm.test(\"Factor 4.5 correcto\", () => {\r",
+									"    pm.expect(json.monto).to.eql(esperado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sbm\": 1000000,\r\n  \"gradoIncapacidad\": 20.0,\r\n  \"opciones\": {\r\n    \"granInvalidez\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beneficios",
+								"calcular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC04_Grado_39_9_Factor_15",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"const esperado = 1000000 * 15;\r",
+									"\r",
+									"pm.test(\"Factor 15 correcto\", () => {\r",
+									"    pm.expect(json.monto).to.eql(esperado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sbm\": 1000000,\r\n  \"gradoIncapacidad\": 39.9,\r\n  \"opciones\": {\r\n    \"granInvalidez\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beneficios",
+								"calcular"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "03_Pension_Parcial",
+			"item": [
+				{
+					"name": "TC05_Grado_40",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"const esperado = 1000000 * 0.30;\r",
+									"\r",
+									"pm.test(\"PENSION_PARCIAL\", () => {\r",
+									"    pm.expect(json.tipoBeneficio).to.eql(\"PENSION_PARCIAL\");\r",
+									"});\r",
+									"pm.test(\"Monto 30%\", () => {\r",
+									"    pm.expect(json.monto).to.eql(esperado);\r",
+									"});\r",
+									"pm.test(\"MENSUAL\", () => {\r",
+									"    pm.expect(json.periodicidad).to.eql(\"MENSUAL\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sbm\": 1000000,\r\n  \"gradoIncapacidad\": 40,\r\n  \"opciones\": {\r\n    \"granInvalidez\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beneficios",
+								"calcular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC06_Grado_45_5",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"const esperado = 1500000 * 0.30;\r",
+									"\r",
+									"pm.test(\"Monto 30% correcto\", () => {\r",
+									"    pm.expect(json.monto).to.eql(esperado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sbm\": 1500000,\r\n  \"gradoIncapacidad\": 45.5,\r\n  \"opciones\": {\r\n    \"granInvalidez\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beneficios",
+								"calcular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC07_Gran_Invalidez_Parcial",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"const esperado = (1000000 * 0.30) + (1000000 * 0.30);\r",
+									"\r",
+									"pm.test(\"Incluye suplemento 30%\", () => {\r",
+									"    pm.expect(json.monto).to.eql(esperado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sbm\": 1000000,\r\n  \"gradoIncapacidad\": 50,\r\n  \"opciones\": {\r\n    \"granInvalidez\": true\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beneficios",
+								"calcular"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "04_Pension_Total",
+			"item": [
+				{
+					"name": "TC08_Grado_70",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"const esperado = 1000000 * 0.70;\r",
+									"\r",
+									"pm.test(\"PENSION_TOTAL\", () => {\r",
+									"    pm.expect(json.tipoBeneficio).to.eql(\"PENSION_TOTAL\");\r",
+									"});\r",
+									"pm.test(\"Monto 70%\", () => {\r",
+									"    pm.expect(json.monto).to.eql(esperado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sbm\": 1000000,\r\n  \"gradoIncapacidad\": 70,\r\n  \"opciones\": {\r\n    \"granInvalidez\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beneficios",
+								"calcular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC09_Grado_80",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"const esperado = 2000000 * 0.70;\r",
+									"\r",
+									"pm.test(\"Monto 70% correcto\", () => {\r",
+									"    pm.expect(json.monto).to.eql(esperado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sbm\": 2000000,\r\n  \"gradoIncapacidad\": 80,\r\n  \"opciones\": {\r\n    \"granInvalidez\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beneficios",
+								"calcular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC10_Gran_Invalidez_Total",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"const esperado = (1000000 * 0.70) + (1000000 * 0.30);\r",
+									"\r",
+									"pm.test(\"Monto con suplemento\", () => {\r",
+									"    pm.expect(json.monto).to.eql(esperado);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sbm\": 1000000,\r\n  \"gradoIncapacidad\": 75,\r\n  \"opciones\": {\r\n    \"granInvalidez\": true\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beneficios",
+								"calcular"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "05_Casos_Negativos",
+			"item": [
+				{
+					"name": "TC11_Grado_Negativo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Debe retornar 400\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sbm\": 1000000,\r\n  \"gradoIncapacidad\": -10,\r\n  \"opciones\": {\r\n    \"granInvalidez\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beneficios",
+								"calcular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC12_SBM_Cero",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Debe retornar error 400\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sbm\": 0,\r\n  \"gradoIncapacidad\": 50,\r\n  \"opciones\": {\r\n    \"granInvalidez\": false\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beneficios",
+								"calcular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC13_Payload_Invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Debe retornar 400 por payload incompleto\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"gradoIncapacidad\": 50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beneficios",
+								"calcular"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DDT_Calculo_Beneficio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const json = pm.response.json();\r",
+							"const data = pm.iterationData.toObject();\r",
+							"\r",
+							"pm.test(\"Status debe ser 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Tipo de beneficio correcto\", () => {\r",
+							"    pm.expect(json.tipoBeneficio).to.eql(data.expectedTipo);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Monto correcto\", () => {\r",
+							"    pm.expect(json.monto).to.eql(Number(data.expectedMonto));\r",
+							"});\r",
+							"\r",
+							"if (data.expectedPeriodicidad) {\r",
+							"    pm.test(\"Periodicidad correcta\", () => {\r",
+							"        pm.expect(json.periodicidad).to.eql(data.expectedPeriodicidad);\r",
+							"    });\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sbm\": {{sbm}},\r\n  \"gradoIncapacidad\": {{gradoIncapacidad}},\r\n  \"opciones\": {\r\n    \"granInvalidez\": {{granInvalidez}}\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/beneficios/calcular",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"beneficios",
+						"calcular"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
